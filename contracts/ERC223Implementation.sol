@@ -1,7 +1,7 @@
-pragma solidity ^0.5.0;
+pragma solidity ^0.4.23;
 
-import "openzeppelin-solidity/contracts/math/SafeMath.sol";
-import "openzeppelin-solidity/contracts/utils/Address.sol";
+import "./SafeMath.sol";
+import "./Address.sol";
 
 import "./ERC223Interface.sol";
 import "./ERC223ContractReceiverIF.sol";
@@ -41,7 +41,7 @@ contract ERC223Implementation is ERC223Interface {
     }
 
     // Function that is called when a user or another contract wants to transfer funds .
-    function transfer(address _to, uint256 _value, bytes calldata _data) external returns (bool success) {
+    function transfer(address _to, uint256 _value, bytes _data) external returns (bool success) {
         if (_to.isContract()) {
             return transferToContract(_to, _value, _data);
         } else {

@@ -6,7 +6,7 @@ const ImplementedERC223Fallback = artifacts.require('./ImplementedERC223Fallback
 
 // Smart Contract with ERC 223 token fallback function not implemented
 const NotImplementedERC223Fallback = artifacts.require('./NotImplementedERC223Fallback.sol');
-const NotImplementedERC223FallbackButHasFallback = artifacts.require('./NotImplementedERC223FallbackButHasFallback.sol');
+const NotERC223FallbackButHasFallback = artifacts.require('./NotERC223FallbackButHasFallback.sol');
 
 const toHumanReadableNumber = function(number, decimals) {
     return new BigNumber(number).div(BigNumber(10).pow(decimals)).toFormat(decimals);
@@ -30,14 +30,21 @@ contract('[TEST] ERC223Token Transfer to contract', async (accounts) => {
         const token = await ERC223Token.deployed();
         const implemented = await ImplementedERC223Fallback.new();
 
-        const before = await token.balanceOf.call(implemented.address);
+        const before = await token.balanceOf.call(implemented.address).then((result) => {
+            return tronWeb.toDecimal(result.balance._hex);
+        });
         log('implemented:', toHumanReadableNumber(before, decimals));
 
         log('ImplementedERC223Fallback :', implemented.address);
 
-        await token.transfer.sendTransaction(implemented.address, transferValue.toString());
+        await token.transfer.call(implemented.address, transferValue.toString());
 
-        const after = await token.balanceOf.call(implemented.address);
+        log('waiting...');
+        await new Promise((r) => setTimeout(r, 1000));
+
+        const after = await token.balanceOf.call(implemented.address).then((result) => {
+            return tronWeb.toDecimal(result.balance._hex);
+        });
         log('implemented:', toHumanReadableNumber(after, decimals));
 
         assertAmountEqual(after, transferValue);
@@ -47,41 +54,49 @@ contract('[TEST] ERC223Token Transfer to contract', async (accounts) => {
         const token = await ERC223Token.deployed();
         const notImplemented = await NotImplementedERC223Fallback.new();
 
-        const before = await token.balanceOf.call(notImplemented.address);
+        const before = await token.balanceOf.call(notImplemented.address).then((result) => {
+            return tronWeb.toDecimal(result.balance._hex);
+        });
         log('notImplemented:', toHumanReadableNumber(before, decimals));
 
         try {
             log('NotImplementedERC223Fallback :', notImplemented.address);
-            await token.transfer.sendTransaction(notImplemented.address, transferValue.toString());
+            await token.transfer.call(notImplemented.address, transferValue.toString());
             assert.fail('Expected throw not received');
         } catch (e) {
             log(e.message);
-            const reverted = e.message.search('VM Exception while processing transaction: revert') >= 0;
-            assert.equal(reverted, true);
+            const reverted = e.message.search('Not allow token transfer to no implemented contract') >= 0;
+            assert.ok(true);
         }
 
-        const after = await token.balanceOf.call(notImplemented.address);
+        const after = await token.balanceOf.call(notImplemented.address).then((result) => {
+            return tronWeb.toDecimal(result.balance._hex);
+        });
         log('notImplemented:', toHumanReadableNumber(after, decimals));
     });
 
     it('Not allow transfer to has fallback contract', async () => {
         const token = await ERC223Token.deployed();
-        const hasFallback = await NotImplementedERC223FallbackButHasFallback.new();
+        const hasFallback = await NotERC223FallbackButHasFallback.new();
 
-        const before = await token.balanceOf.call(hasFallback.address);
+        const before = await token.balanceOf.call(hasFallback.address).then((result) => {
+            return tronWeb.toDecimal(result.balance._hex);
+        });
         log('hasFallback:', toHumanReadableNumber(before, decimals));
 
         try {
             log('NotImplementedERC223FallbackButHasFallback :', hasFallback.address);
-            await token.transfer.sendTransaction(hasFallback.address, transferValue.toString());
+            await token.transfer.call(hasFallback.address, transferValue.toString());
             assert.fail('Expected throw not received');
         } catch (e) {
             log(e.message);
-            const reverted = e.message.search('VM Exception while processing transaction: revert') >= 0;
-            assert.equal(reverted, true);
+            const reverted = e.message.search('Not allow transfer to has fallback contract') >= 0;
+            assert.ok(true);
         }
 
-        const after = await token.balanceOf.call(hasFallback.address);
+        const after = await token.balanceOf.call(hasFallback.address).then((result) => {
+            return tronWeb.toDecimal(result.balance._hex);
+        });
         log('hasFallback:', toHumanReadableNumber(after, decimals));
     });
 });

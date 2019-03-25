@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity ^0.4.23;
 
 /**
  * @title SafeMath
@@ -84,7 +84,9 @@ library Address {
         // TODO Check this again before the Serenity release, because all addresses will be
         // contracts then.
         // solhint-disable-next-line no-inline-assembly
-        assembly { size := extcodesize(account) }
+        assembly {
+            size := extcodesize(account)
+        }
         return size > 0;
     }
 }
@@ -97,7 +99,7 @@ interface ERC223Interface {
     function totalSupply() external view returns (uint256 _supply);
 
     function transfer(address to, uint256 value) external returns (bool ok);
-    function transfer(address to, uint256 value, bytes calldata data) external returns (bool ok);
+    function transfer(address to, uint256 value, bytes data) external returns (bool ok);
 
     event Transfer(address indexed from, address indexed to, uint256 value);
     event Transfer(address indexed from, address indexed to, uint value, bytes indexed data);
@@ -105,7 +107,7 @@ interface ERC223Interface {
 
 /* https://github.com/Dexaran/ERC223-token-standard/blob/Recommended/Receiver_Interface.sol */
 interface ERC223ContractReceiverIF {
-    function tokenFallback(address _from, uint256 _value, bytes calldata _data) external returns (bool);
+    function tokenFallback(address _from, uint256 _value, bytes _data) external returns (bool);
 }
 
 /* https://github.com/Dexaran/ERC223-token-standard/blob/Recommended/ERC223_Token.sol */
@@ -143,7 +145,7 @@ contract ERC223Implementation is ERC223Interface {
     }
 
     // Function that is called when a user or another contract wants to transfer funds .
-    function transfer(address _to, uint256 _value, bytes calldata _data) external returns (bool success) {
+    function transfer(address _to, uint256 _value, bytes _data) external returns (bool success) {
         if (_to.isContract()) {
             return transferToContract(_to, _value, _data);
         } else {

@@ -1,10 +1,10 @@
-pragma solidity ^0.5.0;
+pragma solidity ^0.4.23;
 
 /**
 * @title Contract that will work with ERC223 tokens.
 */
 
-contract NotImplementedERC223FallbackButHasFallback {
+contract NotERC223FallbackButHasFallback {
     /**
      * @dev fallback function
      *

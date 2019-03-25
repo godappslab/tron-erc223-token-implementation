@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity ^0.4.23;
 
 import "../contracts/ERC223ContractReceiverIF.sol";
 
@@ -15,7 +15,7 @@ contract ImplementedERC223Fallback is ERC223ContractReceiverIF {
      * @param _value Amount of tokens.
      * @param _data  Transaction metadata.
      */
-    function tokenFallback(address _from, uint256 _value, bytes calldata _data) external returns (bool) {
+    function tokenFallback(address _from, uint256 _value, bytes _data) external returns (bool) {
         sender = _from;
         anyValue = _value;
         anyData = _data;

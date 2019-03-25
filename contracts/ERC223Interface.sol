@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity ^0.4.23;
 
 interface ERC223Interface {
     function balanceOf(address who) external view returns (uint256);
@@ -8,7 +8,7 @@ interface ERC223Interface {
     function totalSupply() external view returns (uint256 _supply);
 
     function transfer(address to, uint256 value) external returns (bool ok);
-    function transfer(address to, uint256 value, bytes calldata data) external returns (bool ok);
+    function transfer(address to, uint256 value, bytes data) external returns (bool ok);
 
     event Transfer(address indexed from, address indexed to, uint256 value);
     event Transfer(address indexed from, address indexed to, uint value, bytes indexed data);

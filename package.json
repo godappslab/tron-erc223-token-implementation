@@ -1,9 +1,9 @@
 {
-  "name": "erc223-token-implementation",
-  "version": "1.0.0",
+  "name": "tron-erc223-token-implementation",
+  "version": "0.0.1",
   "description": "",
   "private": true,
-  "main": "truffle-config.js",
+  "main": "tronbox-config.js",
   "directories": {
     "test": "test"
   },
@@ -17,7 +17,6 @@
     "bignumber.js": "^8.0.1",
     "openzeppelin-solidity": "^2.1.3",
     "sol-merger": "^0.1.3",
-    "truffle-hdwallet-provider": "^1.0.2",
-    "web3": "^1.0.0-beta.41"
+    "tronweb": "^2.3.2"
   }
 }

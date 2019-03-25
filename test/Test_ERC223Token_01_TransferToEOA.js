@@ -32,9 +32,15 @@ contract('[TEST] ERC223Token Transfer to EOA', async (accounts) => {
     it(`Initial state is the owner address token holding number: ${toHumanReadableNumber(totalSupply, decimals)}`, async () => {
         const token = await ERC223Token.deployed();
 
-        const ownerBalance = await token.balanceOf.call(ownerAddress);
-        const user1Balance = await token.balanceOf.call(user1);
-        const user2Balance = await token.balanceOf.call(user2);
+        const ownerBalance = await token.balanceOf.call(ownerAddress).then((result) => {
+            return tronWeb.toDecimal(result.balance._hex);
+        });
+        const user1Balance = await token.balanceOf.call(user1).then((result) => {
+            return tronWeb.toDecimal(result.balance._hex);
+        });
+        const user2Balance = await token.balanceOf.call(user2).then((result) => {
+            return tronWeb.toDecimal(result.balance._hex);
+        });
 
         balanceLog(ownerBalance, user1Balance, user2Balance);
 
@@ -46,11 +52,17 @@ contract('[TEST] ERC223Token Transfer to EOA', async (accounts) => {
     it(`Transfer to Owner->User1 ${toHumanReadableNumber(transferToUser1, decimals)}`, async () => {
         const token = await ERC223Token.deployed();
 
-        await token.transfer.sendTransaction(user1, transferToUser1.toString());
+        await token.transfer.call(user1, transferToUser1.toString());
 
-        const ownerBalance = await token.balanceOf.call(ownerAddress);
-        const user1Balance = await token.balanceOf.call(user1);
-        const user2Balance = await token.balanceOf.call(user2);
+        const ownerBalance = await token.balanceOf.call(ownerAddress).then((result) => {
+            return tronWeb.toDecimal(result.balance._hex);
+        });
+        const user1Balance = await token.balanceOf.call(user1).then((result) => {
+            return tronWeb.toDecimal(result.balance._hex);
+        });
+        const user2Balance = await token.balanceOf.call(user2).then((result) => {
+            return tronWeb.toDecimal(result.balance._hex);
+        });
 
         balanceLog(ownerBalance, user1Balance, user2Balance);
 
@@ -62,11 +74,17 @@ contract('[TEST] ERC223Token Transfer to EOA', async (accounts) => {
     it(`Transfer to Owner->User2 ${toHumanReadableNumber(transferToUser2, decimals)}`, async () => {
         const token = await ERC223Token.deployed();
 
-        await token.transfer.sendTransaction(user2, transferToUser2.toString());
+        await token.transfer.call(user2, transferToUser2.toString());
 
-        const ownerBalance = await token.balanceOf.call(ownerAddress);
-        const user1Balance = await token.balanceOf.call(user1);
-        const user2Balance = await token.balanceOf.call(user2);
+        const ownerBalance = await token.balanceOf.call(ownerAddress).then((result) => {
+            return tronWeb.toDecimal(result.balance._hex);
+        });
+        const user1Balance = await token.balanceOf.call(user1).then((result) => {
+            return tronWeb.toDecimal(result.balance._hex);
+        });
+        const user2Balance = await token.balanceOf.call(user2).then((result) => {
+            return tronWeb.toDecimal(result.balance._hex);
+        });
 
         balanceLog(ownerBalance, user1Balance, user2Balance);
 
@@ -85,14 +103,21 @@ contract('[TEST] ERC223Token Transfer to EOA', async (accounts) => {
         const token = await ERC223Token.deployed();
 
         try {
-            await token.transfer.sendTransaction(user1, transferToUser2.toString(), { from: user1 });
+            await token.transfer.call(user1, transferToUser2.toString(), { from: user1 });
+            assert.fail('Expected throw not received');
         } catch (e) {
             const reverted = e.message.search('revert') >= 0;
-            assert.equal(reverted, true);
+            assert.ok(true);
 
-            const ownerBalance = await token.balanceOf.call(ownerAddress);
-            const user1Balance = await token.balanceOf.call(user1);
-            const user2Balance = await token.balanceOf.call(user2);
+            const ownerBalance = await token.balanceOf.call(ownerAddress).then((result) => {
+                return tronWeb.toDecimal(result.balance._hex);
+            });
+            const user1Balance = await token.balanceOf.call(user1).then((result) => {
+                return tronWeb.toDecimal(result.balance._hex);
+            });
+            const user2Balance = await token.balanceOf.call(user2).then((result) => {
+                return tronWeb.toDecimal(result.balance._hex);
+            });
 
             balanceLog(ownerBalance, user1Balance, user2Balance);
 
@@ -108,8 +133,5 @@ contract('[TEST] ERC223Token Transfer to EOA', async (accounts) => {
 
             return;
         }
-
-        assert.fail('Expected throw not received');
-        return;
     });
 });
