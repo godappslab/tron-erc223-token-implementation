@@ -1,14 +1,16 @@
-# Implementation of ERC 223 token
+# Implementation of ERC 223 token (TRON)
 
 *Read this in other languages: [English](README.en.md) , [Japanese](README.ja.md) .*
 
 ## Overview
 
-This is the implemented source code and documentation for the ERC 223 token.
+This is the source code and documentation that has modified the ERC 223 token to work with [TRON | Decentralize The Web](https://tron.network/) .
+
+- The compiler does not support `pragma solidity ^0.5.0;` of `SafeMath.sol` `Address.sol` of openzeppelin-solidity, so it is included in the project and is called `pragma solidity ^0.4.23;` .
 
 ## Token setting
 
-The implementation is such that the specification of token name, symbol, total supply amount, and number of decimal places can be changed by variables in `migrations/2_deploy_erc223_token.js` file.
+The implementation is such that the token name, symbol, total supply amount, and the number of decimal places can be changed by the variables in the `migrations/2_deploy_tron_token.js` file.
 
 ```es6
 const fs = require('fs');
@@ -70,69 +72,70 @@ https://github.com/ethereum/EIPs/issues/223#issuecomment-423952050
 
 ## Test Cases
 
-Check the operation with a test script using [Truffle Suite](https://truffleframework.com/) .
+[Confirm](https://github.com/tronprotocol/tron-box) operation with test script using [tronprotocol / tron-box](https://github.com/tronprotocol/tron-box) .
 
 Paste the test execution results below.
 
 ```bash
-$ truffle test
-Using network 'test'.
+$ tronbox test
+Using network 'development'.
 
+Compiling ./contracts/ERC223ContractReceiverIF.sol...
+Compiling ./test/ImplementedERC223Fallback.sol...
+Compiling ./test/NotERC223FallbackButHasFallback.sol...
+Compiling ./test/NotImplementedERC223Fallback.sol...
+Deploying contracts to development network...
 
-Compiling your contracts...
-===========================
-> Compiling ./test/ImplementedERC223Fallback.sol
-> Compiling ./test/NotImplementedERC223Fallback.sol
-> Compiling ./test/NotImplementedERC223FallbackButHasFallback.sol
-> Artifacts written to /var/folders/9y/6q4417_x24b107s0jc7g5gmw0000gp/T/test-119215-62107-oljwve.nornb
-> Compiled successfully using:
-   - solc: 0.5.0+commit.1d4f565a.Emscripten.clang
+Warning: This version does not support tests written in Solidity.
 
+Preparing Javascript tests (if any)...
 
 
   Contract: [TEST] ERC223Token Transfer to EOA
        [LOG] Owner      : 1,000,000,000.000000000000000000
        [LOG] User1      : 0.000000000000000000
        [LOG] User2      : 0.000000000000000000
-    ✓ Initial state is the owner address token holding number: 1,000,000,000.000000000000000000 (80ms)
+    ✓ Initial state is the owner address token holding number: 1,000,000,000.000000000000000000 (63ms)
        [LOG] Owner      : 999,999,900.000000000000000000
        [LOG] User1      : 100.000000000000000000
        [LOG] User2      : 0.000000000000000000
-    ✓ Transfer to Owner->User1 100.000000000000000000 (133ms)
+    ✓ Transfer to Owner->User1 100.000000000000000000 (120ms)
        [LOG] Owner      : 999,999,700.000000000000000000
        [LOG] User1      : 100.000000000000000000
        [LOG] User2      : 200.000000000000000000
-    ✓ Transfer to Owner->User2 200.000000000000000000 (125ms)
+    ✓ Transfer to Owner->User2 200.000000000000000000 (110ms)
        [LOG] Owner      : 999,999,700.000000000000000000
        [LOG] User1      : 100.000000000000000000
        [LOG] User2      : 200.000000000000000000
-    ✓ Transfer to User1->User2 200.000000000000000000 (123ms)
+    ✓ Transfer to User1->User2 200.000000000000000000 (92ms)
 
   Contract: [TEST] ERC223Token Transfer to contract
        [LOG] implemented: 0.000000000000000000
-       [LOG] ImplementedERC223Fallback : 0x8f0483125FCb9aaAEFA9209D8E9d7b9C8B9Fb90F
+       [LOG] ImplementedERC223Fallback : 41edfae670018200a05947552c1d972baad90a1752
+       [LOG] waiting...
        [LOG] implemented: 100.000000000000000000
-    ✓ Allow token transfer to implemented contract (160ms)
+    ✓ Allow token transfer to implemented contract (1136ms)
        [LOG] notImplemented: 0.000000000000000000
-       [LOG] NotImplementedERC223Fallback : 0x2C2B9C9a4a25e24B174f26114e8926a9f2128FE4
-       [LOG] Returned error: VM Exception while processing transaction: revert
+       [LOG] NotImplementedERC223Fallback : 41387ee0e8fc901652d279b221b941291da8a83d80
+       [LOG] assert.fail()
        [LOG] notImplemented: 0.000000000000000000
-    ✓ Not allow token transfer to no implemented contract (163ms)
+    ✓ Not allow token transfer to no implemented contract (127ms)
        [LOG] hasFallback: 0.000000000000000000
-       [LOG] NotImplementedERC223FallbackButHasFallback : 0xFB88dE099e13c3ED21F80a7a1E49f8CAEcF10df6
-       [LOG] Returned error: VM Exception while processing transaction: revert
+       [LOG] NotImplementedERC223FallbackButHasFallback : 41d14a2032ac5642f3d4adab6f8a5152c5696ff26f
+       [LOG] assert.fail()
        [LOG] hasFallback: 0.000000000000000000
-    ✓ Not allow transfer to has fallback contract (144ms)
+    ✓ Not allow transfer to has fallback contract (113ms)
 
 
-  7 passing (1s)
+  7 passing (2s)
+
 ```
 
 ## Implementation
 
 Implementation will be released on GitHub.
 
-https://github.com/godappslab/erc223-token-implementation
+https://github.com/godappslab/tron-erc223-token-implementation
 
 ## References
 
