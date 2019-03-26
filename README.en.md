@@ -133,9 +133,17 @@ Preparing Javascript tests (if any)...
 
 ## Implementation
 
-Implementation will be released on GitHub.
+The implementation is available on GitHub.
 
 https://github.com/godappslab/tron-erc223-token-implementation
+
+Token is deployed on the test net.
+
+https://shasta.tronscan.org/#/contract/TXhZKUNdQyPKB88Sif74u81wPLhq8Zm74r
+
+Implementation of ERC 223 token developed for Ethereum is released in the following repository.
+
+https://github.com/godappslab/erc223-token-implementation
 
 ## References
 
