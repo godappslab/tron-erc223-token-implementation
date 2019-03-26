@@ -134,9 +134,17 @@ Preparing Javascript tests (if any)...
 
 ## 実装
 
-実装はGitHubにて公開する。
+実装はGitHubにて公開しています。
 
 https://github.com/godappslab/tron-erc223-token-implementation
+
+トークンはテストネットにデプロイしています。
+
+https://shasta.tronscan.org/#/contract/TXhZKUNdQyPKB88Sif74u81wPLhq8Zm74r
+
+Ethereum 向けに開発したERC223トークンの実装は下記のリポジトリで公開しています。
+
+https://github.com/godappslab/erc223-token-implementation
 
 ## 参考文献
 
