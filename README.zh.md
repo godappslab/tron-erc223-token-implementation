@@ -1,6 +1,6 @@
 # 执行ERC 223令牌（TRON）
 
-*请阅读其他语言版本： [英语](README.en.md) ， [日语](README.ja.md) 。*
+*Read this in other languages: [English](README.en.md), [日本語](README.ja.md).*
 
 ## 摘要
 
