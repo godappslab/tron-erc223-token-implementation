@@ -1,6 +1,6 @@
 # ERC223トークンの実装(TRON)
 
-*Read this in other languages: [English](README.en.md), [日本語](README.ja.md).*
+*Read this in other languages: [English](README.en.md), [简体中文](README.zh.md), [日本語](README.ja.md).*
 
 ## 概要
 

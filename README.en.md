@@ -1,6 +1,6 @@
 # Implementation of ERC 223 token (TRON)
 
-*Read this in other languages: [English](README.en.md) , [Japanese](README.ja.md) .*
+*Read this in other languages: [English](README.en.md), [简体中文](README.zh.md), [日本語](README.ja.md).*
 
 ## Overview
 
